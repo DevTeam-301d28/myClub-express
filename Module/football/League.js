@@ -3,11 +3,11 @@
 
 class League{
     constructor(league){
-      this.LeagueId=league.idLeague,
-      this.LeagueNameDetails=league.strLeague,
+      this.leagueId=league.idLeague,
+      this.leagueNameDetails=league.strLeague,
       this.sport=league.strSport,
-      this.LeagueName=league.strLeagueAlternate,
-      this.LeagueImage=[league.strFanart1,league.strFanart2,league.strFanart3,league.strFanart4,league.strBanner,
+      this.leagueName=league.strLeagueAlternate,
+      this.leagueImage=[league.strFanart1,league.strFanart2,league.strFanart3,league.strFanart4,league.strBanner,
         league.strBadge,league.strLogo,league.strPoster,league.strTrophy],
         this.currentSeason=league.strCurrentSeason,
         this.formedYear=league.intFormedYear,
