@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const getallLeaguesController=require('./Controllers/getallLeagues.controller')
+const getallTeamesController=require('./Controllers/getAllTeamsInLeague.controller')
 const cors = require("cors");
 app.use(cors());
 
@@ -11,6 +12,8 @@ const PORT = process.env.PORT;
 
 
 app.get("/leagues/:countryName",getallLeaguesController);
+
+app.get("/teams/:leagueName",getallTeamesController);
 
 // app.get("/home/team", (req, res) => {
 //   let name = req.query.name;
