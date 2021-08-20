@@ -5,7 +5,7 @@ const Team = require("../Module/football/Team");
 
  let getallTeamesController=(req, res) => {
     axios
-      .get(`https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=${req.params.leagueName}`)
+      .get(`https://www.thesportsdb.com/api/v1/json/1/lookup_all_teams.php?id=${req.params.leagueId}`)
       .then((resp) => {
           let teamsArr=[]
         let data = resp.data.teams;

@@ -13,7 +13,7 @@ const PORT = process.env.PORT;
 
 app.get("/leagues/:countryName",getallLeaguesController);
 
-app.get("/teams/:leagueName",getallTeamesController);
+app.get("/teams/:leagueId",getallTeamesController);
 
 // app.get("/home/team", (req, res) => {
 //   let name = req.query.name;
