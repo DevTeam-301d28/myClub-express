@@ -1,7 +1,7 @@
 class Team{
     constructor(team){
       this.teamId=team.idTeam,
-      this.teamNameDetails=team.strAlternate,
+      this.teamNameDetails=team.strTeam,
       this.sport=team.strSport,
       this.formedYear=team.intFormedYear,
       this.teamName=team.strteamAlternate,
@@ -19,7 +19,8 @@ class Team{
      this.stadiumImg=team.strStadiumThumb
      this.stadiumDescription=team.strStadiumDescription,
      this.strStadiumLocation=team.strStadiumLocation,
-     this.intStadiumCapacity=team.intStadiumCapacity
+     this.intStadiumCapacity=team.intStadiumCapacity,
+     this.leauge=team.strLeague
     }
   }
   module.exports=Team
