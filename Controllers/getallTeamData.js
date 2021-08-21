@@ -3,7 +3,7 @@ const app = express();
 const axios = require("axios");
 const TeamData = require("../Module/football/TeamData");
 
-let getallTeamData = (req, res) => {
+let getallTeamData= (req, res) => {
     axios
         .get(`https://www.thesportsdb.com/api/v1/json/1/lookupteam.php?id=${req.params.idTeam}
   `)
@@ -23,4 +23,4 @@ let getallTeamData = (req, res) => {
         );
 
 }
-module.exports = getallTeamData;
+module.exports=getallTeamData;

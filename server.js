@@ -2,8 +2,7 @@ const express = require("express");
 const app = express();
 const getallLeaguesController = require('./Controllers/getallLeagues.controller')
 const getallTeamesController = require('./Controllers/getAllTeamsInLeague.controller')
-
-const getallTeamData = require('./Controllers/getallTeamData.controller')
+const getallTeamData = require ('./Controllers/getallTeamData')
 
 
 const cors = require("cors");
@@ -18,7 +17,7 @@ app.get("/teams/:leagueId", getallTeamesController);
 
 
 //suzan
-app.get("/lookup/:teamID", getallTeamsId);
+app.get("/lookup/:teamID", getallTeamData);
 
 
 app.listen(PORT, () => {
