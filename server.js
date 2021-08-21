@@ -17,7 +17,7 @@ app.get("/teams/:leagueId", getallTeamesController);
 
 
 //suzan
-app.get("/lookup/:teamID", getallTeamData);
+app.get("/lookup/:idTeam", getallTeamData);
 
 
 app.listen(PORT, () => {
