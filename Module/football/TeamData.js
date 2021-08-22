@@ -3,29 +3,17 @@
 class TeamData {
     constructor(team) {
         this.teamId = team.idTeam,
-            this.strTeam = team.strTeam,
-            this.intFormedYear = team.intFormedYear,
-            this.strLeague = team.strLeague,
-            this.idLeague = team.idLeague,
-            this.strStadium = team.strStadium,
-            this.strStadiumThumb = team.strStadiumThumb,
-            this.strStadiumDescription = team.strStadiumDescription,
-            this.strStadiumLocation = team.strStadiumLocation,
-            this.intStadiumCapacity = team.intStadiumCapacity,
-            this.strWebsite = team.strWebsite,
-            this.strFacebook = team.strFacebook,
-            this.strTwitter = team.strTwitter,
-            this.strYoutube = team.strYoutube,
-            this.strInstagram = team.strInstagram,
-            this.strCountry = team.strCountry,
-            this.strDescriptionEN = team.strDescriptionEN,
-            this.strTeamBadge = team.strTeamBadge,
+            this.strTeamName = team.strTeam,
+            this.strFormedYear = team.intFormedYear,
+            this.strLeagueName = team.strLeague,
+            this.strleaguesIds = team.idLeague,
+            this.strStadiumInfo = [team.strStadium,team.strStadiumThumb, team.strStadiumDescription,team.strStadiumLocation, team.intStadiumCapacity]
+            this.strTeamLinks = [team.strWebsite,team.strFacebook,team.strTwitter,team.strYoutube,team.strInstagram]
+            this.strTeamCountry = team.strCountry,
+            this.strTeamDescriptionEN = team.strDescriptionEN,
+            this.strLogosArray= [this.strTeamLogo = team.strTeamLogo,team.strTeamFanart1,team.strTeamFanart2,team.strTeamFanart3,team.strTeamFanart4]
             this.strTeamJersey = team.strTeamJersey,
-            this.strTeamLogo = team.strTeamLogo,
-            this.strTeamFanart1 = team.strTeamFanart1,
-            this.strTeamFanart2 = team.strTeamFanart2,
-            this.strTeamFanart3 = team.strTeamFanart3,
-            this.strTeamFanart4 = team.strTeamFanart4,
+            this.strTeamBadge = team.strTeamBadge,
             this.strTeamBanner = team.strTeamBanner
     }
 }

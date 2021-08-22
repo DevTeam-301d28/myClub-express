@@ -6,17 +6,17 @@ class Player{
         this.idTeam2=player.idTeam2,
         this.strNationality=player.strNationality,
         this.idSoccerXML=player.idSoccerXML,
-       this.strPlayer=player.strPlayer,
-       this.strTeam=player.strTeam,
-       this.strTeam2=player.strTeam2,
-       this.dateBorn=player.dateBorn,
-       this.strNumber=player.strNumber,
-       this.strDescriptionEN=player.strDescriptionEN,
+        this.strPlayer=player.strPlayer,
+        this.strTeam=player.strTeam,
+        this.strTeam2=player.strTeam2,
+        this.dateBorn=player.dateBorn,
+        this.strNumber=player.strNumber,
+        this.strDescriptionEN=player.strDescriptionEN,
         this.strPosition=player.strPosition,
-       this.strFacebook=player.strFacebook,
-       this.strWebsite=player.strWebsite
-       this.strYoutube=player.strYoutube
-       this.playerImage=player.strThumb
+        this.strFacebook=player.strFacebook,
+        this.strWebsite=player.strWebsite,
+        this.strYoutube=player.strYoutube,
+        this.playerImage=player.strThumb
       }
     }
     module.exports=Player
