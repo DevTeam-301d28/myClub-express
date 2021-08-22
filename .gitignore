@@ -24,3 +24,10 @@ yarn-debug.log*
 yarn-error.log*
 
 node_modules
+
+Controllers/getallLeagues.Controllers
+Controllers/getallTeamData.Controllers
+Controllers/getEventsByTeamId.controller
+Controllers/getPlayersController.controller
+*.old
+refactored

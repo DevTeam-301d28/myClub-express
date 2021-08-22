@@ -4,7 +4,7 @@
     "react-app/jest"
   ],
   "parserOptions": {
-    "ecmaVersion": 7,
+    "ecmaVersion": 6,
     "sourceType": "module",
     "ecmaFeatures": {
       "impliedStrict": true
@@ -23,7 +23,7 @@
     "no-undefined": "off",
     "indent": [
       "error",
-      2
+      4
     ],
     "quotes": [
       "warn",
