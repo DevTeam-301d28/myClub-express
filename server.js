@@ -17,9 +17,11 @@ const helmet = require('helmet');
 
 app.use(morgan('dev'));
 app.use(helmet());
+app.use(express.json())
 
 const {
-    checkUserData
+  checkUserData,
+  Data
     } = require('./database/db')
 
 
@@ -31,6 +33,15 @@ app.get('/teams/:leagueId', Controllers.getallTeamesController);
 app.get('/lookup/:idTeam', Controllers.getallTeamData);
 app.get('/player/:playerId', Controllers.getPlayersController);
 app.get('/teamEvents/:teamId', Controllers.getTeamEventsById);
+
+
+// app.get('/all',getUsers)
+// app.get('/user/:id',showUser)
+// app.post('/Createuser',createUser)
+app.patch('/updateUser/:id',Data.updateUser)
+// app.delete('/removeUser/:id',removeUser)
+
+
 
 mongoose.connect(configs.AtlasDataBaseConnection, configs.ConnectionParameters);
 const db = mongoose.connection;

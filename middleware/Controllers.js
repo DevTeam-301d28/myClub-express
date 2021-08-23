@@ -1,6 +1,7 @@
 const axios = require('axios');
-const Controllers = {};
 
+const jwtVerify = require('../security/checkJwt.controller');
+const Controllers = {};
 const {
   Event,
   League,
@@ -22,13 +23,17 @@ Controllers.getallLeaguesController = async function (request, response) {
       .then((apiResponse) => {
         let leagueArr = [];
         let data = apiResponse.data.countrys;
-        data.map((item) => {
-          let league = new League(item);
-          if (item.strSport === 'Soccer') {
-            leagueArr.push(league);
-          }
-        });
-        response.send(leagueArr);
+        if (data){  
+          data.map((item) => {
+            if (item.strSport === 'Soccer') {
+              leagueArr.push( new League(item));
+            }
+          });
+          response.send(leagueArr);
+        }else{
+          response.send(['No Leagues']);
+        }
+       
       })
       .catch((error) => {
         handleError(error);
@@ -37,17 +42,20 @@ Controllers.getallLeaguesController = async function (request, response) {
 };
 
 Controllers.getallTeamData = async function (request, response) {
-  let requestuestURL = `${API_URL}/lookupteam.php?id=${request.params.idTeam}`;
+  let requestuestURL = `${configs.API_URL}/lookupteam.php?id=${request.params.idTeam}`;
   axios
     .get(requestuestURL)
     .then((apiResponse) => {
       let teamsdata = [];
       let data = apiResponse.data.teams;
-      data.map((item) => {
-        let team = new TeamData(item);
-        teamsdata.push(team);
-      });
-      response.send(teamsdata);
+      console.log(data)
+      if (data){ 
+        console.log(data)
+        response.send(teamsdata);
+       }else{
+        response.send('No data Found');
+       }
+      
     })
     .catch((error) => {
       handleError(error);
@@ -55,20 +63,26 @@ Controllers.getallTeamData = async function (request, response) {
 };
 
 Controllers.getallTeamesController = async function (request, response) {
-  let requestuestURL = `${API_URL}/lookup_all_teams.php?id=${request.params.leagueId}`;
+  let requestuestURL = `${configs.API_URL}/lookup_all_teams.php?id=${request.params.leagueId}`;
   requestuestURL;
   axios
     .get(requestuestURL)
     .then((apiResponse) => {
       let teamsArr = [];
       let data = apiResponse.data.teams;
-      data.map((item) => {
-        let team = new Team(item);
-        if (item.strSport === 'Soccer') {
-          teamsArr.push(team);
-        }
-      });
-      response.send(teamsArr);
+    
+      if (data){  
+        data.map((item) => {
+          let team = new Team(item);
+          if (item.strSport === 'Soccer') {
+            teamsArr.push(team);
+          }
+        });
+        response.send(teamsArr);
+      }else{
+        response.send('No Details')
+      }
+   
     })
     .catch((error) => {
       handleError(error);
@@ -76,7 +90,7 @@ Controllers.getallTeamesController = async function (request, response) {
 };
 
 Controllers.getTeamEventsById = async function (request, response) {
-  let requestuestURL = `${API_URL}/eventslast.php?id=${request.params.teamId}`;
+  let requestuestURL = `${configs.API_URL}/eventslast.php?id=${request.params.teamId}`;
   axios
     .get(requestuestURL)
     .then((apiResponse) => {
@@ -95,7 +109,7 @@ Controllers.getTeamEventsById = async function (request, response) {
 };
 
 Controllers.getPlayersController = async function (request, response) {
-  let requestuestURL = `${API_URL}/lookupplayer.php?id=${request.params.playerId}`;
+  let requestuestURL = `${configs.API_URL}/lookupplayer.php?id=${request.params.playerId}`;
   axios.get(requestuestURL).then((apiResponse) => {
     let playersArr = [];
     let data = apiResponse.data.players;
