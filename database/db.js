@@ -1,5 +1,5 @@
 const jwtVerify = require('../security/checkJwt.controller');
-
+const Data = {};
 const UserModel = require('./Models/Users');
 
 async function checkUserData(request, response) {
@@ -7,17 +7,26 @@ async function checkUserData(request, response) {
   jwtVerify(token, valid);
   async function valid(jwtUser) {
     const email = jwtUser.email;
-    const uname = jwtUser.given_name + ' ' + jwtUser.family_name;
+    const nickname = jwtUser.given_name + ' ' + jwtUser.family_name;
+    let favouriteleague, favTeamName, selectedSport, favPlayer;
+    favouriteleague = 'NA';
+    favTeamName = 'NA';
+    selectedSport = 'NA';
+    favPlayer = 'CR7';
+    searchHistory = [1];
     await UserModel.find({ email }, (err, data) => {
       if (err) throw err;
       if (!data.length > 0) {
         data[0] = {
           email,
-          uname,
-          intrestedInPlayers: [1],
-          intrestedInLeauges: [1],
+          nickname,
+          favouriteleague,
+          favTeamName,
+          selectedSport,
+          favPlayer,
           intrestedInTeams: [1],
           intrestedInPlayers: [1],
+          intrestedInLeauges: [1],
         };
         let thisUser = new UserModel(data[0]);
         thisUser.save();
@@ -28,70 +37,122 @@ async function checkUserData(request, response) {
   }
 }
 
-// const getUsers = (req, res) => {
-//   User.find()
-//     .then((all) => {
-//       if (all) {
-//         res.json(all);
-//       } else {
-//         res.status(404).json('no users');
-//       }
-//     })
-//     .catch((err) => res.json({ error: err }));
-// };
+// const mongoose = require("mongoose");
+// const express = require("express");
+//
+// let app = express();
 
-// let showUser = (req, res) => {
-//   let id = req.params.id;
-//   console.log(id);
-//   User.findById(id)
-//     .then((user) => {
-//       if (user) {
-//         res.status(200).json(user);
-//       } else {
-//         res.status(404).json('user with that id is not found');
-//       }
-//     })
-//     .catch((err) =>
-//       res.status(500).json({ message: 'user not found', error: err }),
-//     );
-// };
+// mongoose.connect('mongodb://ashrf:1234@cluster0-shard-00-00.qfd84.mongodb.net:27017,cluster0-shard-00-01.qfd84.mongodb.net:27017,cluster0-shard-00-02.qfd84.mongodb.net:27017/User?ssl=true&replicaSet=atlas-qp17uo-shard-0&authSource=admin&retryWrites=true&w=majority', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// }) .then(() => 'You are now connected to Mongo!')
+// .catch(err => console.error('Something went wrong', err));
 
-// // when user update his details///////////////////////////
+const { default: axios } = require('axios');
 
-// let updateUser = async (req, res) => {
-//   let id = req.params.id;
-//   let data = req.body;
-//   let newData = {};
+// get all users
 
-//   console.log(theUser);
-//   let arr = Object.keys(data);
-//   arr.map((key) => {
-//     newData[key] = data[key];
-//   });
+Data.getUsers = async (req, res) => {
+  UserModel.find()
+    .then((all) => {
+      if (all) {
+        res.json(all);
+      } else {
+        res.status(404).json('no users');
+      }
+    })
+    .catch((err) => res.json({ error: err }));
+};
+///// when you sign in
 
-//   User.updateOne({ _id: id }, { $set: newData })
-//     .then((updated) => {
-//       console.log(newData);
-//       res.status(200).json({ message: 'updated sccussfully', upt: updated });
-//     })
-//     .catch((err) => {
-//       res.send(500).json({ error: err });
-//     });
-// };
+Data.createUser = async (req, res) => {
+  let data = req.body;
+  newUser = new User(data);
 
-// //// remove user
-// let removeUser = async (req, res) => {
-//   let id = req.id;
-//   User.remove({ _id: id })
-//     .then((result) =>
-//       res
-//         .status(200)
-//         .json({ message: 'user deleted succesully', reslt: result }),
-//     )
-//     .catch((err) => res.status(500).json({ error: err }));
-// };
+  newUser
+    .save()
+    .then((doc) =>
+      res.json({ message: 'user created succefully', user: newUser }),
+    )
+    .catch((err) => console.log(err));
+  //
+};
+
+//// get user by id
+Data.showUser = async (req, res) => {
+  let id = '61239b0c212d4550e43bacfb';
+  console.log(id);
+  UserModel.findById(id)
+    .then((user) => {
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(404).json('user with that id is not found');
+      }
+    })
+    .catch((err) =>
+      res.status(500).json({ message: 'user not found', error: err }),
+    );
+};
+
+// when user update his details///////////////////////////
+
+Data.updateUser = async (req, res) => {
+  let id = '61239b0c212d4550e43bacfb';
+  let data = req.body;
+  let newData = {};
+  let arr = Object.keys(data);
+
+ 
+  let theUser = axios
+    .get(`http://localhost:3050/user/${id}`)
+    .then((resp) => {
+      return resp.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  //////////////////////
+  console.log(theUser);
+  theUser.intrestedInLeauges.map((ele) => {
+    data.intrestedInLeauges.push(ele);
+  });
+  theUser.intrestedInTeams.map((ele) => {
+    data.intrestedInTeams.push(ele);
+  });
+  theUser.intrestedInPlayers.map((ele) => {
+    data.intrestedInPlayers.push(ele);
+  });
+
+  console.log(data.intrestedInLeauges);
+  arr.map((key) => {
+    newData[key] = data[key];
+  });
+
+  User.updateOne({ _id: id }, { $set: data })
+    .then((updated) => {
+      // console.log(newData);
+      res.status(200).json({ message: 'updated sccussfully', upt: updated });
+    })
+    .catch((err) => {
+      res.send(500).json({ error: err });
+    });
+};
+
+//// remove user
+Data.removeUser = async (req, res) => {
+  let id = req.id;
+  User.deleteOne(id)
+    .then((result) =>
+      res
+        .status(200)
+        .json({ message: 'user deleted succesully', reslt: result }),
+    )
+    .catch((err) => res.status(500).json({ error: err }));
+};
 
 module.exports = {
- 
-  checkUserData
+  checkUserData,
+  Data,
 };

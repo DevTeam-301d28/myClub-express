@@ -2,8 +2,6 @@
 const JsonWebToken = require('jsonwebtoken');
 const jwksClient = require('jwks-rsa');
 
-
-
 function jwtVerify(token, callback) {
   JsonWebToken.verify(token, getKey, {}, (err, user) => {
     if (err) return callback(err);
@@ -20,7 +18,5 @@ function getKey(headers, callback) {
     callback(null, signingKey);
   });
 }
-
-
 
 module.exports = jwtVerify;
