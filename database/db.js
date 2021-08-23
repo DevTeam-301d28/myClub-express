@@ -1,18 +1,18 @@
-const jwtVerify = require('../security/checkJwt.controller');
+const jwtVerify = require("../security/checkJwt.controller");
 const Data = {};
-const UserModel = require('./Models/Users');
+const UserModel = require("./Models/Users");
 
 async function checkUserData(request, response) {
-  let token = request.headers.authorization.split(' ')[1];
+  let token = request.headers.authorization.split(" ")[1];
   jwtVerify(token, valid);
   async function valid(jwtUser) {
     const email = jwtUser.email;
-    const nickname = jwtUser.given_name + ' ' + jwtUser.family_name;
+    const nickname = jwtUser.given_name + " " + jwtUser.family_name;
     let favouriteleague, favTeamName, selectedSport, favPlayer;
-    favouriteleague = 'NA';
-    favTeamName = 'NA';
-    selectedSport = 'NA';
-    favPlayer = 'CR7';
+    favouriteleague = "NA";
+    favTeamName = "NA";
+    selectedSport = "NA";
+    favPlayer = "CR7";
     searchHistory = [1];
     await UserModel.find({ email }, (err, data) => {
       if (err) throw err;
@@ -48,7 +48,7 @@ async function checkUserData(request, response) {
 // }) .then(() => 'You are now connected to Mongo!')
 // .catch(err => console.error('Something went wrong', err));
 
-const { default: axios } = require('axios');
+const axios = require("axios");
 
 // get all users
 
@@ -58,7 +58,7 @@ Data.getUsers = async (req, res) => {
       if (all) {
         res.json(all);
       } else {
-        res.status(404).json('no users');
+        res.status(404).json("no users");
       }
     })
     .catch((err) => res.json({ error: err }));
@@ -72,7 +72,7 @@ Data.createUser = async (req, res) => {
   newUser
     .save()
     .then((doc) =>
-      res.json({ message: 'user created succefully', user: newUser }),
+      res.json({ message: "user created succefully", user: newUser })
     )
     .catch((err) => console.log(err));
   //
@@ -80,60 +80,66 @@ Data.createUser = async (req, res) => {
 
 //// get user by id
 Data.showUser = async (req, res) => {
-  let id = '61239b0c212d4550e43bacfb';
+  let id = req.params.id;
   console.log(id);
   UserModel.findById(id)
     .then((user) => {
       if (user) {
         res.status(200).json(user);
       } else {
-        res.status(404).json('user with that id is not found');
+        res.status(404).json("user with that id is not found");
       }
     })
     .catch((err) =>
-      res.status(500).json({ message: 'user not found', error: err }),
+      res.status(500).json({ message: "user not found", error: err })
     );
 };
 
 // when user update his details///////////////////////////
 
+/////
+
 Data.updateUser = async (req, res) => {
-  let id = '61239b0c212d4550e43bacfb';
+  let id = req.params.id;
   let data = req.body;
   let newData = {};
   let arr = Object.keys(data);
 
- 
-  let theUser = axios
+  let theUser = await axios
     .get(`http://localhost:3050/user/${id}`)
     .then((resp) => {
       return resp.data;
-    })
-    .catch((err) => {
-      console.log(err);
     });
 
   //////////////////////
   console.log(theUser);
-  theUser.intrestedInLeauges.map((ele) => {
-    data.intrestedInLeauges.push(ele);
-  });
-  theUser.intrestedInTeams.map((ele) => {
-    data.intrestedInTeams.push(ele);
-  });
-  theUser.intrestedInPlayers.map((ele) => {
-    data.intrestedInPlayers.push(ele);
-  });
+  if (data.intrestedInLeauges) {
+    theUser.intrestedInLeauges.map((ele) => {
+      data.intrestedInLeauges.push(ele);
+    });
+  }
+
+  if (data.intrestedInPlayers) {
+    theUser.intrestedInPlayers.map((ele) => {
+      data.intrestedInPlayers.push(ele);
+    });
+  }
+
+  if (data.intrestedInTeams) {
+    theUser.intrestedInTeams.map((ele) => {
+      data.intrestedInTeams.push(ele);
+    });
+  }
 
   console.log(data.intrestedInLeauges);
   arr.map((key) => {
     newData[key] = data[key];
   });
 
-  User.updateOne({ _id: id }, { $set: data })
+  UserModel.updateOne({ _id: id }, { $set: data })
     .then((updated) => {
       // console.log(newData);
-      res.status(200).json({ message: 'updated sccussfully', upt: updated });
+      res.status(200).json({ message: "updated sccussfully", upt: updated });
     })
     .catch((err) => {
       res.send(500).json({ error: err });
@@ -147,7 +153,7 @@ Data.removeUser = async (req, res) => {
     .then((result) =>
       res
         .status(200)
-        .json({ message: 'user deleted succesully', reslt: result }),
+        .json({ message: "user deleted succesully", reslt: result })
     )
     .catch((err) => res.status(500).json({ error: err }));
 };

@@ -1,54 +1,47 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const mongoose = require('mongoose');
-const express = require('express');
+const mongoose = require("mongoose");
+const express = require("express");
 const app = express();
 
-const Controllers = require('./middleware/Controllers');
+const Controllers = require("./middleware/Controllers");
 
-const getConfig = require('./configs/allConfigs');
+const getConfig = require("./configs/allConfigs");
 const configs = getConfig();
 
-const cors = require('cors');
+const cors = require("cors");
 app.use(cors());
 
-const morgan = require('morgan');
-const helmet = require('helmet');
+const morgan = require("morgan");
+const helmet = require("helmet");
 
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(helmet());
-app.use(express.json())
+app.use(express.json());
 
-const {
-  checkUserData,
-  Data
-    } = require('./database/db')
+const { checkUserData, Data } = require("./database/db");
 
+app.get("/checkJwt", checkUserData);
 
-app.get('/checkJwt', checkUserData);
+app.get("/leagues/:countryName", Controllers.getallLeaguesController);
+app.get("/teams/:leagueId", Controllers.getallTeamesController);
 
-app.get('/leagues/:countryName', Controllers.getallLeaguesController);
-app.get('/teams/:leagueId', Controllers.getallTeamesController);
+app.get("/lookup/:idTeam", Controllers.getallTeamData);
+app.get("/player/:playerId", Controllers.getPlayersController);
+app.get("/teamEvents/:teamId", Controllers.getTeamEventsById);
 
-app.get('/lookup/:idTeam', Controllers.getallTeamData);
-app.get('/player/:playerId', Controllers.getPlayersController);
-app.get('/teamEvents/:teamId', Controllers.getTeamEventsById);
-
-
-// app.get('/all',getUsers)
-// app.get('/user/:id',showUser)
+app.get("/all", Data.getUsers);
+app.get("/user/:id", Data.showUser);
 // app.post('/Createuser',createUser)
-app.patch('/updateUser/:id',Data.updateUser)
+app.patch("/updateUser/:id", Data.updateUser);
 // app.delete('/removeUser/:id',removeUser)
-
-
 
 mongoose.connect(configs.AtlasDataBaseConnection, configs.ConnectionParameters);
 const db = mongoose.connection;
 const PORT = configs.PORT;
-db.on('error', (error) => console.error(error));
-db.once('open', () => {
+db.on("error", (error) => console.error(error));
+db.once("open", () => {
   console.clear();
-  console.log('Mongoose is Connected!');
+  console.log("Mongoose is Connected!");
   app.listen(PORT, () => console.log(`listening on port ${PORT}`));
 });
