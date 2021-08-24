@@ -29,7 +29,7 @@ app.get("/teams/:leagueId", Controllers.getallTeamesController);
 app.get("/lookup/:idTeam", Controllers.getallTeamData);
 app.get("/player/:playerId", Controllers.getPlayersController);
 app.get("/teamEvents/:teamId", Controllers.getTeamEventsById);
-
+app.get("/lookupByName/:name",Controllers.teamDataByName)
 app.get("/all", Data.getUsers);
 app.get("/user/:id", Data.showUser);
 // app.post('/Createuser',createUser)
