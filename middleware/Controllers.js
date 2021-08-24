@@ -170,7 +170,7 @@ Controllers.getPlayersController = async function (request, response) {
   ];
 
   let index = teamsId.findIndex(
-    (obj) => request.params.name === obj.team && obj,
+    (obj) => request.params.club === obj.team && obj,
   );
   console.log(index);
   let id = teamsId[index].id;
@@ -184,7 +184,7 @@ Controllers.getPlayersController = async function (request, response) {
       thePlayers = res.data.result;
       response.send(thePlayers);
       console.log(thePlayers);
-    });
+    }).catch((err) => {console.log(err)})
 };
 
 module.exports = Controllers;
