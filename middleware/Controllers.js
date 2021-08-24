@@ -61,6 +61,31 @@ Controllers.getallTeamData = async function (request, response) {
       handleError(error);
     });
 };
+Controllers.teamDataByName = async function (request, response) {
+  let requestuestURL = `${configs.API_URL}/searchteams.php?t=${request.params.name}`;
+  axios
+  .get(requestuestURL)
+  .then((apiResponse) => {
+    let teamsArr = [];
+    let data = apiResponse.data.teams;
+  
+    if (data){  
+      data.map((item) => {
+        let team = new Team(item);
+        if (item.strSport === 'Soccer') {
+          teamsArr.push(team);
+        }
+      });
+      response.send(teamsArr);
+    }else{
+      response.send('No Details')
+    }
+ 
+  })
+  .catch((error) => {
+    handleError(error);
+  });
+};
 
 Controllers.getallTeamesController = async function (request, response) {
   let requestuestURL = `${configs.API_URL}/lookup_all_teams.php?id=${request.params.leagueId}`;
