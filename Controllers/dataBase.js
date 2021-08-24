@@ -1,12 +1,3 @@
-const mongoose = require("mongoose");
-const express = require("express");
-let app = express();
-
-mongoose.connect("mongodb://localhost:27017/User", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}) .then(() => 'You are now connected to Mongo!')
-.catch(err => console.error('Something went wrong', err));
 
    
 let UserSchema = new mongoose.Schema({

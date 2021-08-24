@@ -12,12 +12,12 @@ const User = new mongoose.Schema({
   nickname: String,
   favouriteleague: String,
   favTeamName: String,
+  favTeamId: String,
   selectedSport: String,
   favPlayer: String,
   intrestedInTeams: Array,
   intrestedInPlayers: Array,
   intrestedInLeauges: Array
-
 });
 
 const UserModel = mongoose.model('users', User);

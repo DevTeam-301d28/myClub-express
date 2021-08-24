@@ -30,11 +30,17 @@ app.get("/lookup/:idTeam", Controllers.getallTeamData);
 app.get("/player/:playerId", Controllers.getPlayersController);
 app.get("/teamEvents/:teamId", Controllers.getTeamEventsById);
 app.get("/lookupByName/:name",Controllers.teamDataByName)
+
+
 app.get("/all", Data.getUsers);
 app.get("/user/:id", Data.showUser);
-// app.post('/Createuser',createUser)
 app.patch("/updateUser/:id", Data.updateUser);
+// app.post('/Createuser',createUser)
 // app.delete('/removeUser/:id',removeUser)
+// 
+
+app.get("/players/:club", Controllers.getPlayersController)
+
 
 mongoose.connect(configs.AtlasDataBaseConnection, configs.ConnectionParameters);
 const db = mongoose.connection;
