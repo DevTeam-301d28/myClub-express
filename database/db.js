@@ -11,6 +11,7 @@ async function checkUserData(request, response) {
     let favouriteleague, favTeamName, selectedSport, favPlayer;
     favouriteleague = "NA";
     favTeamName = "NA";
+    favTeamId ='NA'
     selectedSport = "NA";
     favPlayer = "CR7";
     searchHistory = [1];
@@ -22,6 +23,7 @@ async function checkUserData(request, response) {
           nickname,
           favouriteleague,
           favTeamName,
+          favTeamId,
           selectedSport,
           favPlayer,
           intrestedInTeams: [1],
