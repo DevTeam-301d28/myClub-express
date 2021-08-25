@@ -104,7 +104,7 @@ Data.updateUser = async (req, res) => {
   let arr = Object.keys(data);
 
   let theUser = await axios
-    .get(`http://localhost:3050/user/${id}`)
+    .get(`https://myclub-1.herokuapp.com/user/${id}`)
     .then((resp) => {
       return resp.data;
     });
