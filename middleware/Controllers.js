@@ -74,7 +74,7 @@ Controllers.teamDataByName = async function (request, response) {
             teamsArr.push(team);
           }
         });
-        response.send(teamsArr.splice(0,1));
+        response.send(teamsArr.splice(0, 1));
       } else {
         response.send('No Details');
       }
@@ -110,14 +110,13 @@ Controllers.getallTeamesController = async function (request, response) {
       handleError(error);
     });
 };
-
 Controllers.getTeamEventsById = async function (request, response) {
   let requestuestURL = `https://www.thesportsdb.com/api/v1/json/1/eventslast.php?id=${request.params.teamId}`;
   axios
     .get(requestuestURL)
     .then((apiResponse) => {
       let eventsArr = [];
-      // console.log(apiResponse)
+
       let data = apiResponse.data.results;
       data.map((item) => {
         eventsArr.push(new Event(item));
@@ -128,24 +127,26 @@ Controllers.getTeamEventsById = async function (request, response) {
       handleError(error);
     });
 };
-
 Controllers.getPlayersController = async function (request, response) {
   let requestuestURL = `${configs.API_URL}/lookupplayer.php?id=${request.params.playerId}`;
-  axios.get(requestuestURL).then((apiResponse) => {
-    let playersArr = [];
-    let data = apiResponse.data.players;
-    data
-      .map((item) => {
-        let player = new Player(item);
-        if (item.strSport === 'Soccer') {
-          playersArr.push(player);
-        }
-      })
-      .catch((error) => {
-        handleError(error);
-      });
-    response.send(playersArr);
-  }).catch(error => console.log(error));
+  axios
+    .get(requestuestURL)
+    .then((apiResponse) => {
+      let playersArr = [];
+      let data = apiResponse.data.players;
+      data
+        .map((item) => {
+          let player = new Player(item);
+          if (item.strSport === 'Soccer') {
+            playersArr.push(player);
+          }
+        })
+        .catch((error) => {
+          handleError(error);
+        });
+      response.send(playersArr);
+    })
+    .catch((error) => console.log(error));
 };
 
 function handleError(error) {
@@ -183,8 +184,10 @@ Controllers.getPlayersController = async function (request, response) {
     .then((res) => {
       thePlayers = res.data.result;
       response.send(thePlayers);
-     
-    }).catch((err) => {console.log(err)})
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 module.exports = Controllers;
