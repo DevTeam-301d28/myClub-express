@@ -74,7 +74,7 @@ Controllers.teamDataByName = async function (request, response) {
             teamsArr.push(team);
           }
         });
-        response.send(teamsArr);
+        response.send(teamsArr.splice(0,1));
       } else {
         response.send('No Details');
       }
