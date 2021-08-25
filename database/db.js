@@ -97,10 +97,6 @@ Data.showUser = async (req, res) => {
     );
 };
 
-// when user update his details///////////////////////////
-
-/////
-
 Data.updateUser = async (req, res) => {
   let id = req.params.id;
   let data = req.body;
@@ -113,7 +109,6 @@ Data.updateUser = async (req, res) => {
       return resp.data;
     });
 
-  //////////////////////
   console.log(theUser);
   if (data.intrestedInLeauges) {
     theUser.intrestedInLeauges.map((ele) => {
