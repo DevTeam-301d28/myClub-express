@@ -145,7 +145,7 @@ Controllers.getPlayersController = async function (request, response) {
         handleError(error);
       });
     response.send(playersArr);
-  });
+  }).catch(error => console.log(error));
 };
 
 function handleError(error) {
@@ -172,9 +172,9 @@ Controllers.getPlayersController = async function (request, response) {
   let index = teamsId.findIndex(
     (obj) => request.params.club === obj.team && obj,
   );
-  console.log(index);
+
   let id = teamsId[index].id;
-  console.log(id);
+
   let thePlayers = [];
   axios
     .get(
@@ -183,7 +183,7 @@ Controllers.getPlayersController = async function (request, response) {
     .then((res) => {
       thePlayers = res.data.result;
       response.send(thePlayers);
-      console.log(thePlayers);
+     
     }).catch((err) => {console.log(err)})
 };
 

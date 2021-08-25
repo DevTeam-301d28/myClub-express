@@ -18,6 +18,7 @@ const helmet = require("helmet");
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(express.json());
+morgan(':method :url :status :res[content-length] - :response-time ms')
 
 const { checkUserData, Data } = require("./database/db");
 
