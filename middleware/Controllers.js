@@ -39,7 +39,6 @@ Controllers.getallLeaguesController = async function (request, response) {
       });
   }
 };
-
 Controllers.getallTeamData = async function (request, response) {
   let requestuestURL = `${configs.API_URL}/lookupteam.php?id=${request.params.idTeam}`;
   axios
@@ -69,7 +68,7 @@ Controllers.teamDataByName = async function (request, response) {
 
       if (data) {
         data.map((item) => {
-          let team = new Team(item);
+          let team = new TeamData(item);
           if (item.strSport === 'Soccer') {
             teamsArr.push(team);
           }
@@ -83,7 +82,6 @@ Controllers.teamDataByName = async function (request, response) {
       handleError(error);
     });
 };
-
 Controllers.getallTeamesController = async function (request, response) {
   let requestuestURL = `${configs.API_URL}/lookup_all_teams.php?id=${request.params.leagueId}`;
 
@@ -148,11 +146,6 @@ Controllers.getPlayersController = async function (request, response) {
     })
     .catch((error) => console.log(error));
 };
-
-function handleError(error) {
-  console.log(error);
-}
-
 Controllers.getPlayersController = async function (request, response) {
   let teamsId = [
     { team: 'sapin', id: 19 },
@@ -190,4 +183,7 @@ Controllers.getPlayersController = async function (request, response) {
     });
 };
 
+function handleError(error) {
+  console.log(error);
+}
 module.exports = Controllers;

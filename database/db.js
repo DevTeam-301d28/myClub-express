@@ -84,12 +84,12 @@ Data.updateUser = async (req, res) => {
   let data = req.body;
   let newData = {};
   let arr = Object.keys(data);
-
+console.log(id)
   let theUser = await axios
     .get(`https://myclub-1.herokuapp.com/user/${id}`)
     .then((resp) => {
       return resp.data;
-    });
+    }).catch(err => {console.log('error something happened: ' + err)});
 
   console.log(theUser);
   if (data.intrestedInLeauges) {
